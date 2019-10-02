@@ -1,0 +1,46 @@
+---
+stages:
+  - style
+  - test
+  - release
+
+style:flake8:
+  stage: style
+  image: python:3.7-alpine
+  script:
+  - apk add py3-pip python3-dev
+  - pip3 install flake8 tox
+  - tox -e flake8
+
+test:3.7:
+  stage: test
+  image: python:3.7-alpine
+  script:
+  - apk add py-pip python3-dev
+  - pip3 install -r requirements_test.txt
+  - pytest --version
+  - tox -e py37
+  artifacts:
+    paths:
+      - htmlcov
+    expire_in: 2 weeks
+
+release:
+  stage: release
+  image: python:3.7-alpine
+  script:
+  - pip install twine
+  - rm -rf dist
+  - echo "[distutils]" >> ~/.pypirc
+  - echo "index-servers=" >> ~/.pypirc
+  - echo "    pypi" >> ~/.pypirc
+  - echo "" >> ~/.pypirc
+  - echo "[pypi]" >> ~/.pypirc
+  - |2
+    echo "username: ${PYPI_USER}" >> ~/.pypirc
+    echo "password: ${PYPI_PASSWD}" >> ~/.pypirc
+  - python3 setup.py check sdist bdist_wheel
+  - ls -lha dist
+  - twine upload  --verbose -r pypi dist/*.tar.gz dist/*.whl
+  only:
+    - /^v\d+\.\d+\.\d+([abc]\d*)?$/  # PEP-440 compliant
