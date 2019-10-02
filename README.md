@@ -12,9 +12,9 @@ Yet another short-link specification for geo-coordinates.
 * can include a zoom level of a map (20-5)
 
 
-### Base-58 encoding
+### Base58 encoding
 
-[Base-58 encoding](https://en.wikipedia.org/wiki/Base58) uses 58 alphanumerical characters, 49 of the alphabet plus 9 digits.
+[Base58 encoding](https://en.wikipedia.org/wiki/Base58) uses 58 alphanumerical characters, 49 of the alphabet plus 9 digits.
 Characters that look similar ('0', 'O', 'I', 'l') are omitted. 
 This allows for manual copying of data with little potential for ambiguity. 
 
