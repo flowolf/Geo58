@@ -2,6 +2,8 @@
 
 Yet another short-link specification for geo-coordinates.
 
+Sister library of [Geo58js (JavaScript)](https://github.com/flowolf/geo58js).
+
 ## Key Features
 
 * uses base-58 encoding
